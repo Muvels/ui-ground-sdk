@@ -3,7 +3,7 @@
 import React from "react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Copy, Terminal } from "lucide-react";
+import { Copy, Terminal, Play } from "lucide-react";
 
 interface CodeWindowProps {
     title?: string;
@@ -11,9 +11,11 @@ interface CodeWindowProps {
     language?: string;
     className?: string;
     withLineNumbers?: boolean;
+    onExecute?: () => void;
+    isRunning?: boolean;
 }
 
-export function CodeWindow({ title = "terminal", code, language = "typescript", className, withLineNumbers = true }: CodeWindowProps) {
+export function CodeWindow({ title = "terminal", code, language = "typescript", className, withLineNumbers = true, onExecute, isRunning }: CodeWindowProps) {
     return (
         <div className={`rounded-xl overflow-hidden bg-[#1e1e1e] border border-zinc-800 shadow-2xl font-mono text-xs md:text-sm ${className}`}>
             {/* Window Controls */}
@@ -27,8 +29,27 @@ export function CodeWindow({ title = "terminal", code, language = "typescript", 
                     <Terminal size={10} />
                     {title}
                 </div>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Copy size={12} className="text-zinc-500" />
+                <div className="flex items-center gap-3">
+                    {onExecute && (
+                        <button
+                            onClick={onExecute}
+                            disabled={isRunning}
+                            className={`flex items-center gap-1.5 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider transition-all
+                                ${isRunning
+                                    ? "bg-zinc-700 text-zinc-400 cursor-wait"
+                                    : "bg-green-600 text-white hover:bg-green-500 hover:shadow-lg hover:shadow-green-900/20 active:scale-95"
+                                }`}
+                        >
+                            {isRunning ? (
+                                <>Running...</>
+                            ) : (
+                                <><Play size={10} className="fill-current" /> Run</>
+                            )}
+                        </button>
+                    )}
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Copy size={12} className="text-zinc-500" />
+                    </div>
                 </div>
             </div>
 
