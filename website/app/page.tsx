@@ -1,9 +1,11 @@
 "use client";
 
 import React from "react";
-import { Database, Layout, ShieldCheck, Cpu } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { TerminalHero } from "@/components/dx/TerminalHero";
-import { ApiFeature } from "@/components/dx/ApiFeature";
+import { FeatureShowcase } from "@/components/dx/FeatureShowcase";
+import { VisionComparison } from "@/components/dx/VisionComparison";
+import { AgentWorkflow } from "@/components/dx/AgentWorkflow";
 
 export default function DxLandingPage() {
     return (
@@ -53,57 +55,17 @@ export default function DxLandingPage() {
                     </div>
                 </section>
 
-                {/* API Showcase */}
-                <section className="container mx-auto px-6 py-24">
-                    <div className="mb-16">
-                        <h2 className="text-2xl font-bold font-mono mb-4">API Capabilities</h2>
-                        <p className="text-zinc-500 max-w-2xl">
-                            Designed for modern TypeScript environments. Run it in Node, Deno, or directly in the browser.
-                        </p>
-                    </div>
+                {/* Agentic Workflow Animation */}
+                <AgentWorkflow />
 
-                    <ApiFeature
-                        method="db.query(vector)"
-                        description="Perform semantic searches against the DOM. The engine converts your query into a vector embedding and finds the closest semantic match in the current accessibility tree."
-                        code={`// Find a button that looks like 'Buy'
-const result = await db.query({
-  semantic: "Buy Now",
-  role: "button",
-  threshold: 0.85
-});
+                {/* API Showcase (Tabbed) */}
+                <FeatureShowcase />
 
-console.log(result.handle); // Native DOM Reference`}
-                    />
-
-                    <ApiFeature
-                        method="db.fuseIcons()"
-                        description="Automatically detect and label SVG icons using our built-in shape matcher. No need for vision models to understand 'Settings' gear icons or 'Menu' burgers."
-                        code={`// Before fusion: <button><svg>...</svg></button>
-await db.fuseIcons();
-
-// After fusion: <button aria-label="Settings">...</button>
-// Now queryable:
-const settings = await db.query("Settings");`}
-                    />
-
-                    <ApiFeature
-                        method="collector.snapshot()"
-                        description="Capture a clean, noise-free snapshot of the current page state. Removes divs, spans, and layout wrappers to leave only the interactive semantic structure."
-                        code={`const snapshot = await collector.snapshot();
-
-// Returns a clean tree
-/*
-{
-  id: "node_1",
-  role: "article",
-  children: [ ... ]
-}
-*/`}
-                    />
-                </section>
+                {/* Vision Comparison */}
+                <VisionComparison />
 
                 {/* Privacy Architecture */}
-                <section className="bg-zinc-50 py-24 border-y border-zinc-100">
+                <section className="bg-white py-24">
                     <div className="container mx-auto px-6 text-center">
                         <ShieldCheck className="w-12 h-12 text-zinc-900 mx-auto mb-6" />
                         <h2 className="text-2xl font-bold font-mono mb-4">Zero-Vision Privacy</h2>
@@ -113,7 +75,7 @@ const settings = await db.query("Settings");`}
                         </p>
 
                         <div className="flex justify-center gap-2">
-                            <div className="px-4 py-2 bg-white border border-zinc-200 rounded text-xs font-mono text-zinc-500">
+                            <div className="px-4 py-2 bg-zinc-50 border border-zinc-100 rounded text-xs font-mono text-zinc-500">
                                 DOM (Local)
                             </div>
                             <div className="text-zinc-300">→</div>
@@ -121,7 +83,7 @@ const settings = await db.query("Settings");`}
                                 UI-Ground Engine
                             </div>
                             <div className="text-zinc-300">→</div>
-                            <div className="px-4 py-2 bg-white border border-zinc-200 rounded text-xs font-mono text-zinc-500">
+                            <div className="px-4 py-2 bg-zinc-50 border border-zinc-100 rounded text-xs font-mono text-zinc-500">
                                 Semantic JSON
                             </div>
                         </div>
@@ -129,7 +91,7 @@ const settings = await db.query("Settings");`}
                 </section>
 
                 {/* Footer */}
-                <footer className="bg-white py-12 border-t border-zinc-100">
+                <footer className="bg-zinc-50 py-12 border-t border-zinc-100">
                     <div className="container mx-auto px-6 flex justify-between items-center text-xs font-mono text-zinc-400">
                         <div>
                             MIT Licensed
