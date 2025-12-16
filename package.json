@@ -1,0 +1,43 @@
+{
+    "name": "ui-ground-sdk",
+    "version": "0.1.0",
+    "description": "Local UI Database + Query Engine for browser-based UI navigation",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "clean": "rm -rf dist",
+        "test": "vitest",
+        "test:run": "vitest run",
+        "test:coverage": "vitest run --coverage"
+    },
+    "devDependencies": {
+        "@vitest/coverage-v8": "^4.0.15",
+        "happy-dom": "^20.0.11",
+        "typescript": "~5.9.3",
+        "vitest": "^4.0.15"
+    },
+    "dependencies": {
+        "@huggingface/transformers": "^3.5.1"
+    },
+    "files": [
+        "dist",
+        "src"
+    ],
+    "keywords": [
+        "ui",
+        "accessibility",
+        "dom",
+        "query",
+        "automation"
+    ],
+    "license": "MIT"
+}
