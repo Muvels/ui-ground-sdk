@@ -5,7 +5,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { DOMCollector } from '../collector.js';
 import { UiDbConfig } from '../types.js';
-import { IconMatcher } from '../icon-matcher.js';
 import {
     createButton,
     createInput,

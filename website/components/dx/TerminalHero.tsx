@@ -5,6 +5,7 @@ import { ArrowRight, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CodeWindow } from "./CodeWindow";
 import { InstallationBar } from "./InstallationBar";
+import { FloatingQueryBar } from "./FloatingQueryBar";
 import { useUiGround } from "@/hooks/useUiGround";
 import { ElementRole, EmbeddingService, QueryOrchestrator, type SemanticQueryAST } from "ui-ground-sdk";
 
@@ -12,6 +13,7 @@ export function TerminalHero() {
     const { sdk, isReady } = useUiGround();
     const [isRunning, setIsRunning] = useState(false);
     const [log, setLog] = useState<string | null>(null);
+    const [showQueryBar, setShowQueryBar] = useState(false);
 
     const handleExecute = async () => {
         if (!sdk) return;
@@ -25,10 +27,12 @@ export function TerminalHero() {
             const records = sdk.snapshot();
             console.log("Snapshot records:", records.length);
 
-            // 2. Load Embeddings (Real)
+            // 2. Load Embeddings
+            setLog("Loading Embeddings Model...");
             const embeddingService = new EmbeddingService();
-            setLog("Loading Embeddings Model (this may take a sec)...");
-            await embeddingService.initialize();
+            await embeddingService.initialize((pct: number) =>
+                setLog(`Loading model: ${pct.toFixed(0)}%`)
+            );
 
             // 3. Orchestrate Query
             const orchestrator = new QueryOrchestrator(sdk["db"], embeddingService);
@@ -119,7 +123,10 @@ export function TerminalHero() {
                     </div>
 
                     <div className="flex gap-4">
-                        <Button className="h-12 px-8 bg-zinc-900 hover:bg-black text-white font-mono rounded-lg">
+                        <Button
+                            onClick={() => setShowQueryBar(true)}
+                            className="h-12 px-8 bg-zinc-900 hover:bg-black text-white font-mono rounded-lg"
+                        >
                             Try it with our website
                         </Button>
                         <Button variant="outline" className="h-12 px-8 border-zinc-200 text-zinc-900 font-mono rounded-lg hover:bg-zinc-100">
@@ -166,6 +173,11 @@ await btn.click();`}
                 </div>
 
             </div>
+
+            {/* Floating Query Bar */}
+            {showQueryBar && (
+                <FloatingQueryBar onClose={() => setShowQueryBar(false)} />
+            )}
         </section>
     );
 }

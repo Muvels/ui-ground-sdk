@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { UiGround, type UiDbConfig, type SemanticQueryAST } from "ui-ground-sdk";
 // @ts-ignore
 import initWasm, { WasmUiDb } from "@/lib/wasm-pkg/ui_ground_wasm.js";
+import * as LucideIcons from "lucide-react"
 
 export function useUiGround() {
     const [sdk, setSdk] = useState<UiGround | null>(null);
@@ -21,7 +22,7 @@ export function useUiGround() {
                 const instance = new UiGround({
                     engine: "wasm",
                     wasmModule: WasmUiDb,
-                    // We can add iconLibrary here if needed
+                    iconLibrary: LucideIcons,
                 });
 
                 setSdk(instance);

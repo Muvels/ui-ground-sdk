@@ -2,7 +2,7 @@
  * Integration Tests
  * End-to-end tests for the complete SDK flow
  */
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { UiGround } from '../index.js';
 import { createSamplePage, createMockIconLibrary } from './fixtures/mock-dom.js';
 import { ElementRole } from '../types.js';
@@ -107,7 +107,7 @@ describe('UiGround Integration', () => {
             button2.textContent = 'Second Button';
             container.appendChild(button2);
 
-            const records2 = uiGround.snapshot();
+            uiGround.snapshot();
             const records = uiGround.getRecords();
             expect(records.some(r => r.name === 'Second Button')).toBe(true);
             expect(records.some(r => r.name === 'First Button')).toBe(false);

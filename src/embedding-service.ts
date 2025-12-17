@@ -20,6 +20,23 @@ export const EMBEDDING_DIMS = {
 } as const;
 
 /**
+ * Common interface for embedding services
+ * Implemented by both EmbeddingService and WorkerEmbeddingClient
+ */
+export interface IEmbeddingService {
+    /** Check if the service is ready to embed */
+    isReady(): boolean;
+    /** Compute embeddings for multiple texts */
+    embed(texts: string[]): Promise<Float32Array[]>;
+    /** Compute a single embedding */
+    embedSingle(text: string): Promise<Float32Array>;
+    /** Get embedding dimension */
+    getEmbeddingDim(): number;
+    /** Get loading progress (0-100) */
+    getLoadingProgress(): number;
+}
+
+/**
  * Embedding service using HuggingFace Transformers.js
  */
 export class EmbeddingService {

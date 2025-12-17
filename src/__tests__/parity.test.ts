@@ -110,11 +110,11 @@ describe('WASM/JS Parity', () => {
         const testQueries: { name: string; query: QueryAST }[] = [
             {
                 name: 'Query by single role',
-                query: { where: [{ role: 'button' }] },
+                query: { where: [{ role: ElementRole.Button }] },
             },
             {
                 name: 'Query by multiple roles',
-                query: { where: [{ role: ['button', 'link'] }] },
+                query: { where: [{ role: [ElementRole.Button, ElementRole.Link] }] },
             },
             {
                 name: 'Query by exact name',
@@ -132,14 +132,14 @@ describe('WASM/JS Parity', () => {
                 name: 'Combined role and name query',
                 query: {
                     where: [
-                        { role: 'button' },
+                        { role: ElementRole.Button },
                         { name: { value: 'Cart', match: 'contains' } }
                     ]
                 },
             },
             {
                 name: 'Query with limit',
-                query: { where: [{ role: 'button' }], limit: 2 },
+                query: { where: [{ role: ElementRole.Button }], limit: 2 },
             },
             {
                 name: 'Query with order by x',

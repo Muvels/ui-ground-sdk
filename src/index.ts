@@ -9,9 +9,18 @@ export * from "./types.js";
 export { DOMCollector, collectSnapshot } from "./collector.js";
 export { ElementHandleMap } from "./handles.js";
 export { UiDatabase } from "./db.js";
-export { EmbeddingService, EMBEDDING_DIMS } from "./embedding-service.js";
+export { EmbeddingService, EMBEDDING_DIMS, type IEmbeddingService } from "./embedding-service.js";
 export { QueryOrchestrator, type SemanticQueryAST } from "./orchestrator.js";
 export { IconMatcher } from "./icon-matcher.js";
+
+// Worker-based embedding (SharedWorker for cross-tab model sharing)
+export {
+    createWorkerEmbedding,
+    WorkerEmbeddingClient,
+    isSharedWorkerSupported,
+    isWorkerSupported,
+    type WorkerOptions,
+} from "./worker/index.js";
 
 import { collectSnapshot } from "./collector.js";
 import { UiDatabase } from "./db.js";

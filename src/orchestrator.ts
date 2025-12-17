@@ -3,7 +3,7 @@
  * High-level query pipeline combining lexical filtering with semantic reranking
  */
 
-import type { EmbeddingService } from "./embedding-service.js";
+import type { IEmbeddingService } from "./embedding-service.js";
 import type { UiDatabase } from "./db.js";
 import type {
     QueryAST,
@@ -42,10 +42,10 @@ export interface SemanticMatch {
  */
 export class QueryOrchestrator {
     private db: UiDatabase;
-    private embeddingService: EmbeddingService | null;
+    private embeddingService: IEmbeddingService | null;
     private wasmDb: any; // WasmUiDb when loaded
 
-    constructor(db: UiDatabase, embeddingService: EmbeddingService | null = null) {
+    constructor(db: UiDatabase, embeddingService: IEmbeddingService | null = null) {
         this.db = db;
         this.embeddingService = embeddingService;
         this.wasmDb = null;
@@ -61,7 +61,7 @@ export class QueryOrchestrator {
     /**
      * Set the embedding service for semantic search
      */
-    setEmbeddingService(service: EmbeddingService): void {
+    setEmbeddingService(service: IEmbeddingService): void {
         this.embeddingService = service;
     }
 
