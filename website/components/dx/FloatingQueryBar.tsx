@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { X, Loader2, Play, Terminal } from "lucide-react";
 import { useUiGround } from "@/hooks/useUiGround";
 import {
-    EmbeddingService,
+    createWorkerEmbedding,
     QueryOrchestrator,
     type SemanticQueryAST,
     type IEmbeddingService,
@@ -90,12 +90,11 @@ export function FloatingQueryBar({ onClose }: FloatingQueryBarProps) {
             sdk.snapshot();
 
             if (!embeddingClientRef.current) {
-                setLoadingMessage("Loading embeddings...");
-                const embeddingService = new EmbeddingService();
-                await embeddingService.initialize((pct: number) =>
-                    setLoadingMessage(`Loading model: ${pct.toFixed(0)}%`)
-                );
-                embeddingClientRef.current = embeddingService;
+                setLoadingMessage("Loading embeddings (shared worker)...");
+                embeddingClientRef.current = await createWorkerEmbedding({
+                    workerUrl: '/workers/shared-worker.js',
+                    onProgress: (pct: number) => setLoadingMessage(`Loading model: ${pct.toFixed(0)}%`),
+                });
             }
 
             if (!orchestratorRef.current) {

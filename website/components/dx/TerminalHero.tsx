@@ -7,7 +7,7 @@ import { CodeWindow } from "./CodeWindow";
 import { InstallationBar } from "./InstallationBar";
 import { FloatingQueryBar } from "./FloatingQueryBar";
 import { useUiGround } from "@/hooks/useUiGround";
-import { ElementRole, EmbeddingService, QueryOrchestrator, type SemanticQueryAST } from "ui-ground-sdk";
+import { ElementRole, createWorkerEmbedding, QueryOrchestrator, type SemanticQueryAST } from "ui-ground-sdk";
 
 export function TerminalHero() {
     const { sdk, isReady } = useUiGround();
@@ -27,12 +27,12 @@ export function TerminalHero() {
             const records = sdk.snapshot();
             console.log("Snapshot records:", records.length);
 
-            // 2. Load Embeddings
-            setLog("Loading Embeddings Model...");
-            const embeddingService = new EmbeddingService();
-            await embeddingService.initialize((pct: number) =>
-                setLog(`Loading model: ${pct.toFixed(0)}%`)
-            );
+            // 2. Load Embeddings via SharedWorker (shared across tabs!)
+            setLog("Loading Embeddings Model (shared worker)...");
+            const embeddingService = await createWorkerEmbedding({
+                workerUrl: '/workers/shared-worker.js',
+                onProgress: (pct: number) => setLog(`Loading model: ${pct.toFixed(0)}%`),
+            });
 
             // 3. Orchestrate Query
             const orchestrator = new QueryOrchestrator(sdk["db"], embeddingService);
